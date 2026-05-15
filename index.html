@@ -184,7 +184,7 @@
 <body>
 
 <div class="container">
-    <h1 id="main-title">Good Doggy</h1>
+    <h1 id="main-title">Send a random message</h1>
     
     <div class="toggle-container">
         <span>Positive</span>
@@ -202,7 +202,7 @@
     </div>
 
     <div id="message-area">
-        <div id="success-header" class="success-header">✨ Message Dispatched!</div>
+        <div id="success-header" class="success-header">Message Sent</div>
         <div id="generated-message"></div>
         <button style="margin-top:20px; background-color:#606770;" onclick="location.reload()">Reset</button>
     </div>
@@ -215,41 +215,38 @@
         ["the world around you", "every room you enter", "this entire community", "the lives of your friends", "all of your future goals", "the hearts of others", "our shared journey", "the challenges you face", "the people who know you", "every day of the year"]
     ];
 
-       const negBanks = [
+           const negBanks = [
         [
-            "Your presence", "Your general existence", "Your personality", "Your logic", "Your fashion sense", 
-            "Your stinky breath", "Your smelly gym socks", "Your abysmal work ethic", "Your constant whining", 
-            "Your tragic haircut", "Your crusty attitude", "Your damp handshake", "Your lackluster brain", 
-            "Your pathetic excuses", "Your greasy forehead", "Your room temperature IQ", "Your moldy vibe", 
-            "Your goblin-like energy", "Your dusty reputation", "Your repetitive jokes", "Your squeaky voice", 
-            "Your unwashed hoody", "Your basic mentality", "Your prehistoric ideas", "Your toxic mood", 
-            "Your soggy cereal energy", "Your absolute failure of a face", "Your annoying habits", 
-            "Your weirdly long toenails", "Your clumpy, unbrushed hair"
+            "Your life", "Your face", "Your breath", "Your room", "Your soul", 
+            "Your future", "Your ego", "Your brain", "Your hygiene", "Your haircut", 
+            "Your logic", "Your style", "Your vibe", "Your reputation", "Your personality", 
+            "Your attitude", "Your presence", "Your history", "Your energy", "Your look", 
+            "Your character", "Your mouth", "Your spirit", "Your mind", "Your logic", 
+            "Your work", "Your cooking", "Your room", "Your phone", "Your legacy",
+            "Your bedroom", "Your outfit", "Your shoes", "Your voice", "Your laugh",
+            "Your kitchen", "Your desk", "Your car", "Your bank account", "Your effort",
+            "Your ideas", "Your talent", "Your social life", "Your memory", "Your luck",
+            "Your style", "Your fashion", "Your behavior", "Your habits", "Your choices"
         ],
         [
-            "actively reeks like", "is a major disappointment to", "causes massive migraines for", 
-            "radiates a foul stench toward", "is a complete burden on", "perfectly illustrates the failure of", 
-            "genuinely irritates every single", "lowers the standard for", "serves as a biological warning to", 
-            "actively subtracts value from", "creates a void of misery for", "is an evolutionary step backward for", 
-            "makes a wet garbage pile look good to", "functions as a total embarrassment for", 
-            "brings overwhelming shame to", "is the main reason for unhappiness in", "smells worse than a dumpster for", 
-            "actively repels the interest of", "is a walking disaster for", "fosters deep resentment in", 
-            "forces a look of pure disgust on", "clogs the progress of", "is as useful as a screen door on a submarine to", 
-            "makes a brick look intelligent compared to", "is a stain on the memory of", "haunts the nightmares of", 
-            "is a total waste of oxygen for", "ruins the entire day of", "scares away the potential of", 
-            "makes everyone wish they were blind for"
+            "smells like", "looks like", "tastes like", "feels like", "acts like", 
+            "sounds like", "is full of", "is basically", "is exactly like", "is just", 
+            "reminds me of", "is clearly", "is nothing but", "shows off", "is really", 
+            "always seems like", "is definitely", "mostly contains", "actually is", "looks mostly like", 
+            "is 100% just", "is purely", "is only", "is quite literally", "looks exactly like", 
+            "is simply", "is totally", "is naturally", "is honestly", "is truly"
         ],
         [
-            "literally everyone in the world", "the entire tri-state area", "the history of human progress", 
-            "decent, hardworking people", "the concept of common sense", "the people who unfortunately know you", 
-            "your poor, exhausted neighbors", "innocent bystanders", "future generations of children", 
-            "the natural beauty of the planet", "the very air we breathe", "the entire internet", 
-            "the group of people who tolerate you", "anyone with functioning eyes", "the local sewage system", 
-            "modern civilization", "the scientific community", "the local stray cats", "your own reflection", 
-            "the timeline of human evolution", "the people forced to look at you", "the concept of hygiene", 
-            "the world’s most stinky dumpsters", "the entire galaxy", "the ghosts of your ancestors", 
-            "the people you call friends", "every single living cell", "the record books of failure", 
-            "the most smelly parts of the swamp", "the very idea of dignity"
+            "trash", "failure", "garbage", "sewage", "disaster", 
+            "misery", "shame", "rot", "filth", "waste", 
+            "defeat", "regret", "ugliness", "poison", "pollution", 
+            "chaos", "emptiness", "stupidity", "crust", "dirt", 
+            "mold", "slime", "ruins", "decay", "vomit", 
+            "despair", "embarrassment", "tragedy", "doom", "nothingness",
+            "dog food", "old socks", "wet cardboard", "burnt toast", "stale air",
+            "used tissues", "bad math", "a dumpster fire", "a train wreck", "a total joke",
+            "cold grease", "sour milk", "broken glass", "rusty nails", "toxic sludge",
+            "dead batteries", "dirty water", "muddy shoes", "lost hopes", "pure salt"
         ]
     ];
 
