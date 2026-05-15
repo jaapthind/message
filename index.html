@@ -219,7 +219,7 @@
             height: 0;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
-            border-right: 25px solid black; /* The "Long Nose" pointing left */
+            border-right: 25px solid black; 
             
             /* Initial position: Pointing at 'Positive' */
             transform: translate(-140%, -50%); 
@@ -232,6 +232,7 @@
             transform: translate(40%, -50%) rotate(180deg);
             border-right: 25px solid #000000; /* Keeps it black for maximum clarity */
         }
+        #mood-toggle-btn::before { content: "SWITCH MODE"; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: bold; color: black; white-space: nowrap; }
     </style>
 </head>
 <body>
