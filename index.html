@@ -29,20 +29,27 @@
             margin: 0;
             transition: background-color var(--transition);
         }
+        body:not(.naughty-mode) { background: url('sunny.jpg') center/cover no-repeat fixed !important; }
+        
 
         body.naughty-mode {
             background-color: var(--neg-bg);
         }
 
         .container {
-            background-color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px) saturate(210%);
+            -webkit-backdrop-filter: blur(25px) saturate(210%);
             padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
             text-align: center;
             max-width: 450px;
             width: 90%;
-            transition: transform var(--transition);
+            transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
         body.naughty-mode .container {
@@ -179,6 +186,20 @@
         body.naughty-mode .loader { border-top: 4px solid var(--neg-accent); }
 
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        @media (max-width: 600px) {
+        body { padding: 15px; }
+        .container { 
+            width: 100%; 
+            padding: 30px 15px; 
+            box-sizing: border-box; 
+        }
+        h1 { font-size: 1.8rem; }
+        input[type="email"], button { 
+            width: 100%; 
+            font-size: 16px; /* Prevents auto-zoom on iPhone */
+            padding: 12px;
+        }
+    }
     </style>
 </head>
 <body>
@@ -209,10 +230,28 @@
 </div>
 
 <script>
-    const posBanks = [
-        ["Your kindness", "Your energy", "Your smile", "Your persistence", "Your perspective", "Your spirit", "Your hard work", "Your creativity", "Your presence", "The way you help"],
-        ["brings so much light to", "makes a massive difference in", "inspires everyone within", "adds incredible value to", "creates a ripple of joy in", "strengthens the bond of", "perfectly illuminates", "genuinely improves", "anchors the happiness of", "sets a beautiful example for"],
-        ["the world around you", "every room you enter", "this entire community", "the lives of your friends", "all of your future goals", "the hearts of others", "our shared journey", "the challenges you face", "the people who know you", "every day of the year"]
+        const posBanks = [
+        [
+            "Your kindness", "Your energy", "Your smile", "Your persistence", "Your perspective", "Your spirit", "Your hard work", "Your creativity", "Your presence", "Your compassion",
+            "Your optimism", "Your bravery", "Your wisdom", "Your focus", "Your generosity", "Your leadership", "Your patience", "Your passion", "Your honesty", "Your curiosity",
+            "Your resilience", "Your warmth", "Your talent", "Your confidence", "Your empathy", "Your dedication", "Your loyalty", "Your vision", "Your support", "Your humor",
+            "Your grace", "Your strength", "Your ambition", "Your humility", "Your kindness", "Your glow", "Your effort", "Your genius", "Your light", "Your vibe",
+            "Your heart", "Your drive", "Your soul", "Your aura", "Your intelligence", "Your friendship", "Your courage", "Your integrity", "Your care", "Your belief"
+        ],
+        [
+            "brings so much light to", "makes a massive difference in", "inspires everyone within", "adds incredible value to", "creates a ripple of joy in", "strengthens the bond of", "perfectly illuminates", "genuinely improves", "anchors the happiness of", "sets a beautiful example for",
+            "deeply encourages", "totally transforms", "completely uplifts", "naturally brightens", "powerfully impacts", "consistently helps", "beautifully shapes", "positively changes", "effectively supports", "wonderfully enhances",
+            "always protects", "greatly enriches", "steadily guides", "instantly warms", "quietly empowers", "sharply focuses", "kindly softens", "boldly leads", "clearly defines", "magically creates",
+            "safely guards", "truly honors", "richly fills", "proudly carries", "humbly serves", "loyally stands by", "bravely faces", "brightly shines on", "warmly welcomes", "honestly represents",
+            "skillfully builds", "happily shares", "carefully tends to", "wisely teaches", "fairly judges", "calmly handles", "patiently waits for", "gladly gives to", "deeply loves", "strongly backs"
+        ],
+        [
+            "the world around you", "every room you enter", "this entire community", "the lives of your friends", "all of your future goals", "the hearts of others", "our shared journey", "the challenges you face", "the people who know you", "every day of the year",
+            "the local neighborhood", "the school hallways", "the entire family", "the people nearby", "every single moment", "the path ahead", "the social circle", "the modern world", "the global community", "the human spirit",
+            "the minds of many", "the souls of all", "the team environment", "the creative space", "the circle of trust", "the field of play", "the digital world", "the natural beauty", "the flow of life", "the future generations",
+            "the hearts of many", "the spirits of all", "the collective group", "the workspace", "the study group", "the friendship circle", "the entire planet", "the universe itself", "the morning light", "the evening peace",
+            "the quiet moments", "the big events", "the small details", "the daily routine", "the holiday season", "the weekend vibe", "the summer days", "the winter nights", "the spring growth", "the autumn harvest"
+        ]
     ];
 
            const negBanks = [
