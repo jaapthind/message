@@ -34,14 +34,9 @@
             image-rendering: -webkit-optimize-contrast; 
         }
         body.naughty-mode { 
-            background: url('hell.jpg') center center / cover no-repeat fixed !important; 
+            background: url('hell.jpg') center center / cover no-repeat fixed !important;
+            background-color: var(--neg-bg); /* This acts as a backup while the image loads */
             image-rendering: -webkit-optimize-contrast; 
-        }
-        
-        
-
-        body.naughty-mode {
-            background-color: var(--neg-bg);
         }
 
                 .container {
@@ -97,15 +92,10 @@
             box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
         }
 
-        h1 {
-            color: var(--pos-accent);
+        h1, .toggle-container span {
+            color: #000000 !important;
             font-size: 2.5rem;
             margin-bottom: 15px;
-        }
-
-        body.naughty-mode h1 {
-            color: var(--neg-accent);
-            content: "Be Mean";
         }
 
         .toggle-container {
@@ -203,8 +193,8 @@
             display: none;
         }
 
-        .pos-msg { background-color: #f6fef5; border: 1px solid #c3e6cb; color: #155724; }
-        .neg-msg { background-color: #3d0000; border: 1px solid #ff4d4d; color: #ffcccc; }
+        .pos-msg { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); color: #000000 !important; }
+        .neg-msg { background: rgba(0, 0, 0, 0.3); border: 1px solid #ff4d4d; color: #000000 !important; }
 
         #generated-message {
             font-style: italic;
@@ -345,9 +335,10 @@
 
     function generateMessage(isNaughty) {
         const banks = isNaughty ? negBanks : posBanks;
-        const p1 = banks[0][Math.floor(Math.random() * 10)];
-        const p2 = banks[1][Math.floor(Math.random() * 10)];
-        const p3 = banks[2][Math.floor(Math.random() * 10)];
+        // This ensures it ALWAYS picks a valid word, even if one list is shorter than the others
+        const p1 = banks[0][Math.floor(Math.random() * banks[0].length)];
+        const p2 = banks[1][Math.floor(Math.random() * banks[1].length)];
+        const p3 = banks[2][Math.floor(Math.random() * banks[2].length)];
         return `${p1} ${p2} ${p3}.`;
     }
 
