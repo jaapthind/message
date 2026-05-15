@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Positivity Sender</title>
+    <title>Mood Message Dispatcher</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function(){
@@ -11,15 +11,27 @@
         })();
     </script>
     <style>
+        :root {
+            --pos-bg: #f0f2f5;
+            --pos-accent: #42b72a;
+            --neg-bg: #2d0000;
+            --neg-accent: #ff4d4d;
+            --transition: 0.4s;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
+            background-color: var(--pos-bg);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: #1c1e21;
+            transition: background-color var(--transition);
+        }
+
+        body.naughty-mode {
+            background-color: var(--neg-bg);
         }
 
         .container {
@@ -30,19 +42,76 @@
             text-align: center;
             max-width: 450px;
             width: 90%;
+            transition: transform var(--transition);
+        }
+
+        body.naughty-mode .container {
+            border: 2px solid var(--neg-accent);
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.4);
         }
 
         h1 {
-            color: #42b72a;
+            color: var(--pos-accent);
             font-size: 2.5rem;
             margin-bottom: 15px;
         }
 
-        p {
-            font-size: 1.1rem;
-            color: #606770;
-            margin-bottom: 35px;
-            line-height: 1.6;
+        body.naughty-mode h1 {
+            color: var(--neg-accent);
+            content: "Be Mean";
+        }
+
+        .toggle-container {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--neg-accent);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
         .input-group {
@@ -57,15 +126,10 @@
             border-radius: 8px;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.2s;
-        }
-
-        input[type="email"]:focus {
-            border-color: #42b72a;
         }
 
         button {
-            background-color: #42b72a;
+            background-color: var(--pos-accent);
             color: white;
             border: none;
             padding: 15px;
@@ -73,15 +137,11 @@
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
+            transition: background-color 0.2s;
         }
 
-        button:hover {
-            background-color: #36a420;
-        }
-
-        button:active {
-            transform: scale(0.98);
+        body.naughty-mode button {
+            background-color: var(--neg-accent);
         }
 
         button:disabled {
@@ -92,109 +152,160 @@
         #message-area {
             margin-top: 30px;
             padding: 25px;
-            background-color: #f6fef5;
-            border: 1px solid #c3e6cb;
             border-radius: 8px;
             display: none;
         }
 
-        .success-header {
-            color: #155724;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
+        .pos-msg { background-color: #f6fef5; border: 1px solid #c3e6cb; color: #155724; }
+        .neg-msg { background-color: #3d0000; border: 1px solid #ff4d4d; color: #ffcccc; }
 
         #generated-message {
             font-style: italic;
             font-size: 1.3rem;
-            color: #2d3436;
-            word-wrap: break-word;
+            margin: 15px 0;
         }
 
         .loader {
             display: none;
             margin: 10px auto;
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #42b72a;
             border-radius: 50%;
             width: 30px;
             height: 30px;
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        body:not(.naughty-mode) .loader { border-top: 4px solid var(--pos-accent); }
+        body.naughty-mode .loader { border-top: 4px solid var(--neg-accent); }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Be Kind</h1>
-    <p>Send a randomized uplifting message to someone's inbox instantly.</p>
+    <h1 id="main-title">Good Doggy</h1>
     
+    <div class="toggle-container">
+        <span>Positive</span>
+        <label class="switch">
+            <input type="checkbox" id="mood-toggle">
+            <span class="slider"></span>
+        </label>
+        <span>ROASTS</span>
+    </div>
+
     <div id="input-section" class="input-group">
-        <input type="email" id="email" placeholder="Enter recipient's email" required>
-        <button id="send-btn">Send Positivity</button>
+        <input type="email" id="email" placeholder="Recipient's email" required>
+        <button id="send-btn">Send Message</button>
         <div id="loader" class="loader"></div>
     </div>
 
     <div id="message-area">
-        <div class="success-header">✨ Message Dispatched!</div>
+        <div id="success-header" class="success-header">✨ Message Dispatched!</div>
         <div id="generated-message"></div>
-        <button style="margin-top:20px; background-color:#606770;" onclick="location.reload()">Send Another</button>
+        <button style="margin-top:20px; background-color:#606770;" onclick="location.reload()">Reset</button>
     </div>
 </div>
 
 <script>
-    const bank1 = ["You are", "Your ener", "Your smile", "Your persistence", "Your perspective", "Your spirit", "Your hard work", "Your creativity", "Your presence", "The way you help"];
-    const bank2 = ["brings so much light to", "makes a massive difference in", "inspires everyone within", "adds incredible value to", "creates a ripple of joy in", "strengthens the bond of", "perfectly illuminates", "genuinely improves", "anchors the happiness of", "sets a beautiful example for"];
-    const bank3 = ["the world around you", "every room you enter", "this entire community", "the lives of your friends", "all of your future goals", "the hearts of others", "our shared journey", "the challenges you face", "the people who know you", "every day of the year"];
+    const posBanks = [
+        ["Your kindness", "Your energy", "Your smile", "Your persistence", "Your perspective", "Your spirit", "Your hard work", "Your creativity", "Your presence", "The way you help"],
+        ["brings so much light to", "makes a massive difference in", "inspires everyone within", "adds incredible value to", "creates a ripple of joy in", "strengthens the bond of", "perfectly illuminates", "genuinely improves", "anchors the happiness of", "sets a beautiful example for"],
+        ["the world around you", "every room you enter", "this entire community", "the lives of your friends", "all of your future goals", "the hearts of others", "our shared journey", "the challenges you face", "the people who know you", "every day of the year"]
+    ];
 
-    function generateMessage() {
-        const p1 = bank1[Math.floor(Math.random() * bank1.length)];
-        const p2 = bank2[Math.floor(Math.random() * bank2.length)];
-        const p3 = bank3[Math.floor(Math.random() * bank3.length)];
+       const negBanks = [
+        [
+            "Your presence", "Your general existence", "Your personality", "Your logic", "Your fashion sense", 
+            "Your stinky breath", "Your smelly gym socks", "Your abysmal work ethic", "Your constant whining", 
+            "Your tragic haircut", "Your crusty attitude", "Your damp handshake", "Your lackluster brain", 
+            "Your pathetic excuses", "Your greasy forehead", "Your room temperature IQ", "Your moldy vibe", 
+            "Your goblin-like energy", "Your dusty reputation", "Your repetitive jokes", "Your squeaky voice", 
+            "Your unwashed hoody", "Your basic mentality", "Your prehistoric ideas", "Your toxic mood", 
+            "Your soggy cereal energy", "Your absolute failure of a face", "Your annoying habits", 
+            "Your weirdly long toenails", "Your clumpy, unbrushed hair"
+        ],
+        [
+            "actively reeks like", "is a major disappointment to", "causes massive migraines for", 
+            "radiates a foul stench toward", "is a complete burden on", "perfectly illustrates the failure of", 
+            "genuinely irritates every single", "lowers the standard for", "serves as a biological warning to", 
+            "actively subtracts value from", "creates a void of misery for", "is an evolutionary step backward for", 
+            "makes a wet garbage pile look good to", "functions as a total embarrassment for", 
+            "brings overwhelming shame to", "is the main reason for unhappiness in", "smells worse than a dumpster for", 
+            "actively repels the interest of", "is a walking disaster for", "fosters deep resentment in", 
+            "forces a look of pure disgust on", "clogs the progress of", "is as useful as a screen door on a submarine to", 
+            "makes a brick look intelligent compared to", "is a stain on the memory of", "haunts the nightmares of", 
+            "is a total waste of oxygen for", "ruins the entire day of", "scares away the potential of", 
+            "makes everyone wish they were blind for"
+        ],
+        [
+            "literally everyone in the world", "the entire tri-state area", "the history of human progress", 
+            "decent, hardworking people", "the concept of common sense", "the people who unfortunately know you", 
+            "your poor, exhausted neighbors", "innocent bystanders", "future generations of children", 
+            "the natural beauty of the planet", "the very air we breathe", "the entire internet", 
+            "the group of people who tolerate you", "anyone with functioning eyes", "the local sewage system", 
+            "modern civilization", "the scientific community", "the local stray cats", "your own reflection", 
+            "the timeline of human evolution", "the people forced to look at you", "the concept of hygiene", 
+            "the world’s most stinky dumpsters", "the entire galaxy", "the ghosts of your ancestors", 
+            "the people you call friends", "every single living cell", "the record books of failure", 
+            "the most smelly parts of the swamp", "the very idea of dignity"
+        ]
+    ];
+
+    const toggle = document.getElementById('mood-toggle');
+    const body = document.body;
+    const title = document.getElementById('main-title');
+
+    toggle.addEventListener('change', () => {
+        if(toggle.checked) {
+            body.classList.add('naughty-mode');
+            title.textContent = "Be Mean";
+        } else {
+            body.classList.remove('naughty-mode');
+            title.textContent = "Be Kind";
+        }
+    });
+
+    function generateMessage(isNaughty) {
+        const banks = isNaughty ? negBanks : posBanks;
+        const p1 = banks[0][Math.floor(Math.random() * 10)];
+        const p2 = banks[1][Math.floor(Math.random() * 10)];
+        const p3 = banks[2][Math.floor(Math.random() * 10)];
         return `${p1} ${p2} ${p3}.`;
     }
 
     document.getElementById('send-btn').addEventListener('click', () => {
-        const emailInput = document.getElementById('email');
-        const emailValue = emailInput.value.trim();
+        const emailValue = document.getElementById('email').value.trim();
         const sendBtn = document.getElementById('send-btn');
         const loader = document.getElementById('loader');
+        const isNaughty = toggle.checked;
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        if (emailRegex.test(emailValue)) {
+        if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
             sendBtn.disabled = true;
             loader.style.display = "block";
             
-            const finalMessage = generateMessage();
+            const finalMessage = generateMessage(isNaughty);
 
-            const templateParams = {
+            emailjs.send('service_mj6xima', 'template_sr9v9ps', {
                 to_email: emailValue,
                 message: finalMessage
-            };
-
-            emailjs.send('service_mj6xima', 'template_sr9v9ps', templateParams)
-                .then(function(response) {
-                    loader.style.display = "none";
-                    document.getElementById('input-section').style.display = 'none';
-                    document.getElementById('message-area').style.display = 'block';
-                    document.getElementById('generated-message').textContent = `"${finalMessage}"`;
-                    console.log('SUCCESS!', response.status, response.text);
-                }, function(error) {
-                    loader.style.display = "none";
-                    sendBtn.disabled = false;
-                    alert("FAILED to send message. Please check your EmailJS dashboard settings.");
-                    console.error('FAILED...', error);
-                });
-            
+            }).then(() => {
+                loader.style.display = "none";
+                document.getElementById('input-section').style.display = 'none';
+                const area = document.getElementById('message-area');
+                area.style.display = 'block';
+                area.className = isNaughty ? 'neg-msg' : 'pos-msg';
+                document.getElementById('success-header').textContent = isNaughty ? "🔥 Roast Delivered!" : "✨ Positivity Sent!";
+                document.getElementById('generated-message').textContent = `"${finalMessage}"`;
+            }, (err) => {
+                loader.style.display = "none";
+                sendBtn.disabled = false;
+                alert("Error: Check your EmailJS dashboard.");
+                console.error(err);
+            });
         } else {
-            alert("Please enter a valid email address.");
+            alert("Enter a valid email.");
         }
     });
 </script>
