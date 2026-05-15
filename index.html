@@ -35,21 +35,21 @@
         }
         body.naughty-mode { 
             background: url('hell.jpg') center center / cover no-repeat fixed !important;
-            background-color: var(--neg-bg);
+            background-color: var(--neg-bg); 
             image-rendering: -webkit-optimize-contrast; 
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05); 
             backdrop-filter: blur(45px) saturate(280%) brightness(105%);
             -webkit-backdrop-filter: blur(45px) saturate(280%) brightness(105%);
             padding: 50px;
-            border-radius: 45px;
+            border-radius: 45px; 
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.25),
-                inset 0 1px 1px 0 rgba(255, 255, 255, 0.6),
-                inset 0 -1px 1px 0 rgba(255, 255, 255, 0.2);
+                0 25px 50px -12px rgba(0, 0, 0, 0.25), 
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.6), 
+                inset 0 -1px 1px 0 rgba(255, 255, 255, 0.2); 
             text-align: center;
             max-width: 450px;
             width: 90%;
@@ -96,6 +96,7 @@
             z-index: 10;
         }
 
+        /* PERFRECTLY PLACED SLIDER FIX */
         .switch {
             position: relative;
             display: inline-block;
@@ -107,6 +108,7 @@
             opacity: 0;
             width: 0;
             height: 0;
+            margin: 0;
         }
 
         .slider {
@@ -116,9 +118,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #42b72a;
+            background-color: #42b72a !important;
             transition: .4s;
             border-radius: 38px;
+            display: block;
         }
 
         .slider:before {
@@ -128,19 +131,19 @@
             width: 30px;
             left: 4px;
             bottom: 4px;
-            background-color: white;
+            background-color: #ffffff !important;
             transition: .4s;
             border-radius: 50%;
-            z-index: 2;
         }
 
         input:checked + .slider {
-            background-color: #ff4d4d;
+            background-color: #ff4d4d !important;
         }
 
         input:checked + .slider:before {
             transform: translateX(32px);
         }
+        /* END SLIDER FIX */
 
         .input-group {
             display: flex;
@@ -168,6 +171,8 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.2s;
+            position: relative;
+            z-index: 10;
         }
 
         body.naughty-mode button {
@@ -256,7 +261,7 @@
 </div>
 
 <script>
-        const posBanks = [
+    const posBanks = [
         [
             "Your kindness", "Your energy", "Your smile", "Your persistence", "Your perspective", "Your spirit", "Your hard work", "Your creativity", "Your presence", "Your compassion",
             "Your optimism", "Your bravery", "Your wisdom", "Your focus", "Your generosity", "Your leadership", "Your patience", "Your passion", "Your honesty", "Your curiosity",
@@ -280,7 +285,7 @@
         ]
     ];
 
-           const negBanks = [
+    const negBanks = [
         [
             "Your life", "Your face", "Your breath", "Your room", "Your soul", 
             "Your future", "Your ego", "Your brain", "Your hygiene", "Your haircut", 
