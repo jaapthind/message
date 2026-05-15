@@ -29,7 +29,15 @@
             margin: 0;
             transition: background-color var(--transition);
         }
-        body:not(.naughty-mode) { background: url('sunny.jpg') center/cover no-repeat fixed !important; }
+        body:not(.naughty-mode) { 
+            background: url('sunny.jpg') center center / cover no-repeat fixed !important; 
+            image-rendering: -webkit-optimize-contrast; 
+        }
+        body.naughty-mode { 
+            background: url('hell.jpg') center center / cover no-repeat fixed !important; 
+            image-rendering: -webkit-optimize-contrast; 
+        }
+        
         
 
         body.naughty-mode {
