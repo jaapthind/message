@@ -378,6 +378,7 @@
         }
     });
     const d=document.createElement('div'); d.style="position:fixed; top:10px; right:10px; background:rgba(255,255,255,0.2); backdrop-filter:blur(10px); padding:5px 10px; border-radius:15px; font-size:10px; font-weight:bold; color:black; z-index:100; border:1px solid rgba(255,255,255,0.4)"; d.innerText=navigator.userAgentData?`${navigator.userAgentData.platform}`:navigator.platform; document.body.appendChild(d);
+    const s=document.createElement('div'); s.style="position:fixed; top:10px; left:10px; background:rgba(255,255,255,0.2); backdrop-filter:blur(10px); padding:5px 10px; border-radius:15px; font-size:10px; font-weight:bold; color:black; z-index:100; border:1px solid rgba(255,255,255,0.4)"; setInterval(()=>{const d=new Date(); s.innerText=d.toLocaleDateString()+' '+d.toLocaleTimeString([],{hour12:true})},1000); document.body.appendChild(s);
 </script>
 
 </body>
