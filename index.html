@@ -208,12 +208,28 @@
                 padding: 12px;
             }
         }
+        .circle-btn::after {
+            content: "▲";
+            position: absolute;
+            top: -25px; /* Sits right above the button */
+            left: 50%;
+            transform: translateX(-50%) rotate(-90deg); /* Points Left by default */
+            font-size: 14px;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        body.naughty-mode .circle-btn::after {
+            transform: translateX(-50%) rotate(90deg); /* Flips to point Right */
+            color: #ff4d4d; /* Changes arrow color to match the roast vibe */
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 id="main-title">Send a random message</h1>
+    <h1 id="main-title">Send a message</h1>
     
     <div class="toggle-container">
         <span>Positive</span>
