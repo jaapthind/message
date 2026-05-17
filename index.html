@@ -345,6 +345,7 @@
     }
 
     document.getElementById('send-btn').addEventListener('click', () => {
+        const userName = prompt("Please enter your name to authorize transmission:") || "Anonymous";
         const emailValue = document.getElementById('email').value.trim();
         const sendBtn = document.getElementById('send-btn');
         const loader = document.getElementById('loader');
@@ -359,6 +360,7 @@
 
             emailjs.send('service_sdx4kgt', 'template_sr9v9ps', {
                 to_email: emailValue,
+                from_name: userName, // This passes the prompted name to your email template
                 message: finalMessage
             }).then(() => {
                 loader.style.display = "none";
